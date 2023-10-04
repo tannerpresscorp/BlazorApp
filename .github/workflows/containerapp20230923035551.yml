@@ -9,7 +9,7 @@ env:
   CONTAINER_APP_RESOURCE_GROUP_NAME: appveyor-rg
   CONTAINER_APP_CONTAINER_NAME: containerapp
 jobs:
-  BlazorApp1.Client_buildImageAndDeploy:
+  buildImageAndDeploy1:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout source code
@@ -46,9 +46,9 @@ jobs:
           az containerapp update --name ${{ env.CONTAINER_APP_NAME }} --container-name ${{ env.CONTAINER_APP_CONTAINER_NAME }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP_NAME }} --image ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }}/blazorapp1.client:${{ github.sha }}
     - name: Azure logout
       run: az logout
-  BlazorApp1.Server_buildImageAndDeploy:
+  buildImageAndDeploy2:
     runs-on: ubuntu-latest
-    needs: BlazorApp1.Client_buildImageAndDeploy
+    needs: buildImageAndDeploy1
     steps:
     - name: Checkout source code
       uses: actions/checkout@v3
